@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container my-5">
+
+    {% if item %}
+    <form class="form-inline my-2 my-lg-0"  method="POST">
+        {% csrf_token %}
+        <input  class="form-control mr-sm-2" value="{{item.title}}" type="text" placeholder="Enter the New Title" aria-label="Search" name="title" required>
+        <input type="hidden" value="{{item.status}}" name="status">
+        <div style="display:flex ;justify-content:center;margin:10px;">
+
+            <button class="btn btn-success" type="submit" style="text-align: center;"> Edit Item</button>
+        </div>
+    </form>
+    {% endif %}   
+</div>
+
+
+{% endblock body %}

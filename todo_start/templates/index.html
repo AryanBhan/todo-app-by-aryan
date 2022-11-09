@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    home
+{% endblock title %}
+
+{% block body %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+  {{message}}
+</div>
+{% endfor %}
+{% endif %}
+<div class="container my-5">
+
+    <form action="/" method="post">
+      {% csrf_token %}
+        <div class="mb-3">
+      <label for="title" class="form-label">Todo Title</label>
+      <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp" placeholder="Enter the Title" required>
+    </div>
+    
+    <button type="submit" class="btn btn-outline-success p-2 mx-auto">Add Item</button>
+</form>    
+</div>
+{% if all_item %}
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">S.no</th>
+        <th scope="col">Title</th>
+        <th scope="col">Action</th>
+
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for thing in all_item %}
+      {% if thing.status %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td  class="striker"><a href="{%url 'edit' thing.id%}" style="text-decoration:line-through;color:black;padding: 5px;border-radius: 6px;font-family: 'Caveat', cursive;
+          font-family: 'Josefin Sans', sans-serif;text-transform: uppercase;"> {{thing.title}}</a></td>
+
+        <td>
+          
+          <a href="{%url 'uncross' thing.id%}" onMouseOver="this.style.color='#0000FF'"
+          onMouseOut="this.style.color='#000000'" style="text-decoration:none;color:black;border: 3px solid rgba(2, 2, 2, 0.917);padding: 5px;border-radius: 6px;font-family: 'Caveat', cursive;
+          font-family: 'Josefin Sans', sans-serif;text-transform: uppercase;">UNCROSS
+          </a> 
+        </td>
+        <td>
+          
+          <a href="{%url 'delete' thing.id%}" onMouseOver="this.style.color='#0000FF'"
+          onMouseOut="this.style.color='#000000'" style="text-decoration:none;color:black;border: 3px solid rgba(2, 2, 2, 0.917);padding: 5px;border-radius: 6px;font-family: 'Caveat', cursive;
+          font-family: 'Josefin Sans', sans-serif;text-transform: uppercase;">Delete
+          </a> 
+        </td>
+      </tr>
+
+      {% else %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td ><a href="{%url 'edit' thing.id%}" style="text-decoration:none ;color:black;padding: 5px;font-family: 'Caveat', cursive;
+          font-family: 'Josefin Sans', sans-serif;text-transform: uppercase;"> {{thing.title}}</a></td>
+        
+        <td>
+          
+          <a href="{%url 'cross' thing.id%}" onMouseOver="this.style.color='#0000FF'"
+          onMouseOut="this.style.color='#000000'" style="text-decoration:none;color:black;border: 3px solid rgba(2, 2, 2, 0.917);padding: 5px;border-radius: 6px;font-family: 'Caveat', cursive;
+          font-family: 'Josefin Sans', sans-serif;text-transform: uppercase;">CROSS
+          </a> 
+     </td>
+          <td>
+          
+          <a href="{%url 'delete' thing.id%}" onMouseOver="this.style.color='#0000FF'"
+          onMouseOut="this.style.color='#000000'" style="text-decoration:none;color:black;border: 3px solid rgba(2, 2, 2, 0.917);padding: 5px;border-radius: 6px;font-family: 'Caveat', cursive;
+          font-family: 'Josefin Sans', sans-serif;text-transform: uppercase;">Delete
+          </a> 
+        </td>
+      </tr>
+
+    </tbody>
+    {% endif %}
+    {% endfor %}
+  </table>
+  {%endif%}
+</div>
+{% endblock body %}
